@@ -1,8 +1,8 @@
 # Modelagem de Dados:
 
 ## Identifique os Requisitos:
-- [ ] Deve ser possível cadastrar um pet
-  - [ ] Um pet deve estar ligado a uma ORG
+- [x] Deve ser possível cadastrar um pet
+  - [x] Um pet deve estar ligado a uma ORG
 - [ ] Deve ser possível listar todos os pets disponíveis para adoção em uma cidade
   - [ ] Para listar os pets, obrigatoriamente precisamos informar a cidade
   - [ ] Todos os filtros, além da cidade, são opcionais
