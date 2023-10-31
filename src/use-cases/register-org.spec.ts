@@ -1,65 +1,84 @@
 import { describe, expect, it, vi } from 'vitest';
-import { RegisterPetUseCase } from './register-pet';
-import { ResourceNotFound } from './errors/resource-not-found';
-import { type SearchOrgRepository } from '../repositories/org-repository';
+import { type CreateOrgRepository, type SearchOrgByEmailRepository } from '../repositories/org-repository';
 import { Org } from '../entities/Org';
-import { type Pet } from '../entities/Pet';
-import { type CreatePetRepository } from '../repositories/pet-repository';
 import { Address } from '../entities/value-objects/Address';
 import { Coordinate } from '../entities/value-objects/Coordinate';
+import { EmailAlreadyInUse } from './errors/email-already-use';
+import { RegisterOrgUseCase } from './register-org';
 
-describe('Register Pet Use Case', () => {
-  const mockOrgRepository: SearchOrgRepository = {
-    async findById (orgId: string) {
-      return Org.restore({
-        id: 'fake_id',
-        address: new Address({
-          cep: '123',
-          city: 'fake city',
-          coordinate: new Coordinate({ lat: 0, long: 0 }),
-          number: 0,
-          state: 'fake state',
-          street: 'fake street'
-        }),
-        email: 'fake_mail',
-        name: 'fake name',
-        owner: 'fake owner',
-        password: 'fake password',
-        phone: 'fake phone'
-      });
+describe('Register Org Use Case', () => {
+  const mockOrgRepository: SearchOrgByEmailRepository & CreateOrgRepository = {
+    async find (orgEmail: string) {
+      return null;
+    },
+    async create (org: Org): Promise<Org> {
+      return org;
     }
   };
-  const mockPetRepository: CreatePetRepository = {
-    create: async function (pet: Pet, orgId: string): Promise<void> {}
-  };
   const fakeRequest = {
-    orgId: 'fake_org_id',
-    animal: {
-      dateOfBirth: new Date(2020, 1, 1),
-      type: 'dog',
-      size: 25
-    },
-    bio: 'a cute pet',
-    energyLevel: 3,
-    independenceLevel: 2,
-    name: 'flopy',
-    photos: ['url_01', 'url_02'],
-    requirements: ['water', 'food']
+    name: 'fake name',
+    owner: 'fake owner',
+    email: 'fake@mail.com',
+    password: 'fake_password',
+    phone: 'fake phone',
+    address: {
+      city: 'fake city',
+      state: 'fake state',
+      cep: 'fake cep',
+      number: 10,
+      street: 'fake street',
+      coordinate: {
+        lat: 0,
+        long: 0
+      }
+    }
   };
 
-  it('deve ser possível cadastrar um novo pet', async () => {
-    const sut = new RegisterPetUseCase(mockOrgRepository, mockPetRepository);
-    const { pet } = await sut.execute(fakeRequest);
-    expect(pet).toHaveProperty('id');
+  it('deve ser possível cadastrar uma nova org', async () => {
+    const sut = new RegisterOrgUseCase(mockOrgRepository);
+    await expect(sut.execute(fakeRequest)).resolves.toEqual(undefined);
   });
 
-  it('não deve ser possível cadastrar um pet para uma org que não existe',
-    async () => {
-      vi.spyOn(mockOrgRepository, 'findById')
-        .mockResolvedValueOnce(null);
+  it('deve atribuir por padrão o valor zero para lat e long caso não seja informados', async () => {
+    const sut = new RegisterOrgUseCase(mockOrgRepository);
+    await expect(sut.execute({
+      name: 'fake name',
+      owner: 'fake owner',
+      email: 'fake@mail.com',
+      password: 'fake_password',
+      phone: 'fake phone',
+      address: {
+        city: 'fake city',
+        state: 'fake state',
+        cep: 'fake cep',
+        number: 10,
+        street: 'fake street'
+      }
+    })).resolves.toEqual(undefined);
+  });
 
-      const sut = new RegisterPetUseCase(mockOrgRepository, mockPetRepository);
+  it('não deve ser possível registrar uma org com um e-mail que já está em uso',
+    async () => {
+      vi.spyOn(mockOrgRepository, 'find')
+        .mockResolvedValueOnce(Org.restore({
+          id: 'fake_id',
+          address: new Address({
+            cep: '123',
+            city: 'fake city',
+            coordinate: new Coordinate({ lat: 0, long: 0 }),
+            number: 0,
+            state: 'fake state',
+            street: 'fake street'
+          }),
+          email: 'fake_mail',
+          name: 'fake name',
+          owner: 'fake owner',
+          password: 'fake password',
+          phone: 'fake phone'
+        }));
+
+      const sut = new RegisterOrgUseCase(mockOrgRepository);
       await expect(sut.execute(fakeRequest))
-        .rejects.toBeInstanceOf(ResourceNotFound);
+        .rejects.toBeInstanceOf(EmailAlreadyInUse);
     });
 });

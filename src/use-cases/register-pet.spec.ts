@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { RegisterPetUseCase } from './register-pet';
 import { ResourceNotFound } from './errors/resource-not-found';
-import { type SearchOrgRepository } from '../repositories/org-repository';
+import { type SearchOrgByIdRepository } from '../repositories/org-repository';
 import { Org } from '../entities/Org';
 import { type Pet } from '../entities/Pet';
 import { type CreatePetRepository } from '../repositories/pet-repository';
@@ -9,8 +9,8 @@ import { Address } from '../entities/value-objects/Address';
 import { Coordinate } from '../entities/value-objects/Coordinate';
 
 describe('Register Pet Use Case', () => {
-  const mockOrgRepository: SearchOrgRepository = {
-    async findById (orgId: string) {
+  const mockOrgRepository: SearchOrgByIdRepository = {
+    async find (orgId: string) {
       return Org.restore({
         id: 'fake_id',
         address: new Address({
@@ -55,7 +55,7 @@ describe('Register Pet Use Case', () => {
 
   it('não deve ser possível cadastrar um pet para uma org que não existe',
     async () => {
-      vi.spyOn(mockOrgRepository, 'findById')
+      vi.spyOn(mockOrgRepository, 'find')
         .mockResolvedValueOnce(null);
 
       const sut = new RegisterPetUseCase(mockOrgRepository, mockPetRepository);

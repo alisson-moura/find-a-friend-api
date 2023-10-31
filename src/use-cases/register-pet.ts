@@ -1,5 +1,5 @@
 import { Pet, type PetInfos } from '../entities/Pet';
-import { type SearchOrgRepository } from '../repositories/org-repository';
+import { type SearchOrgByIdRepository } from '../repositories/org-repository';
 import { type CreatePetRepository } from '../repositories/pet-repository';
 import { ResourceNotFound } from './errors/resource-not-found';
 
@@ -24,12 +24,12 @@ interface Response {
 
 export class RegisterPetUseCase {
   constructor (
-    private readonly orgRepository: SearchOrgRepository,
+    private readonly orgRepository: SearchOrgByIdRepository,
     private readonly petRepository: CreatePetRepository
   ) { }
 
   async execute (props: Request): Promise<Response> {
-    const org = await this.orgRepository.findById(props.orgId);
+    const org = await this.orgRepository.find(props.orgId);
     if (org == null) {
       throw new ResourceNotFound('org');
     }

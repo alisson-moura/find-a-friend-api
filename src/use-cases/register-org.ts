@@ -1,47 +1,60 @@
-import { Pet, type PetInfos } from '../entities/Pet';
-import { type SearchOrgRepository } from '../repositories/org-repository';
-import { type CreatePetRepository } from '../repositories/pet-repository';
-import { ResourceNotFound } from './errors/resource-not-found';
+import { Org } from '../entities/Org';
+import { Address } from '../entities/value-objects/Address';
+import { Coordinate } from '../entities/value-objects/Coordinate';
+import { type CreateOrgRepository, type SearchOrgByEmailRepository } from '../repositories/org-repository';
+import { EmailAlreadyInUse } from './errors/email-already-use';
 
 interface Request {
-  orgId: string
   name: string
-  bio: string
-  energyLevel: number
-  independenceLevel: number
-  photos: string[]
-  requirements: string[]
-  animal: {
-    dateOfBirth: Date
-    size: number
-    type: string
+  owner: string
+  email: string
+  password: string
+  address: {
+    city: string
+    state: string
+    cep: string
+    number: number
+    street: string
+    coordinate?: {
+      lat: number
+      long: number
+    }
   }
+  phone: string
 }
 
-interface Response {
-  pet: PetInfos
-}
-
-export class RegisterPetUseCase {
+export class RegisterOrgUseCase {
   constructor (
-    private readonly orgRepository: SearchOrgRepository,
-    private readonly petRepository: CreatePetRepository
+    private readonly orgRepository: SearchOrgByEmailRepository & CreateOrgRepository
   ) { }
 
-  async execute (props: Request): Promise<Response> {
-    const org = await this.orgRepository.findById(props.orgId);
-    if (org == null) {
-      throw new ResourceNotFound('org');
+  async execute (props: Request): Promise<void> {
+    const isEmailInUse = await this.orgRepository.find(props.email);
+    if (isEmailInUse != null) {
+      throw new EmailAlreadyInUse();
     }
-    const pet = new Pet({
-      ...props,
-      dateOfAdoption: null
+
+    const address = new Address({
+      cep: props.address.cep,
+      city: props.address.city,
+      number: props.address.number,
+      state: props.address.state,
+      street: props.address.street,
+      coordinate: new Coordinate({
+        lat: props.address.coordinate?.lat ?? 0,
+        long: props.address.coordinate?.long ?? 0
+      })
     });
 
-    await this.petRepository.create(pet, props.orgId);
+    const org = await Org.create({
+      address,
+      email: props.email,
+      name: props.name,
+      owner: props.owner,
+      password: props.password,
+      phone: props.phone
+    });
 
-    return {
-      pet: pet.info
-    };
+    await this.orgRepository.create(org);
   }
 }

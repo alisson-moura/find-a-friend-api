@@ -7,9 +7,9 @@
   - [ ] Para listar os pets, obrigatoriamente precisamos informar a cidade
   - [ ] Todos os filtros, além da cidade, são opcionais
   - [ ] Deve ser possível filtrar pets por suas características
-- [ ] Deve ser possível visualizar detalhes de um pet para adoção
-- [ ] Deve ser possível se cadastrar como uma ORG
-  - [ ] Uma ORG precisa ter um endereço e um número de WhatsApp
+- [x] Deve ser possível visualizar detalhes de um pet para adoção
+- [x] Deve ser possível se cadastrar como uma ORG
+  - [x] Uma ORG precisa ter um endereço e um número de WhatsApp
 - [ ] Deve ser possível realizar login como uma ORG
   - [ ] Para uma ORG acessar a aplicação como admin, ela precisa estar logada
 

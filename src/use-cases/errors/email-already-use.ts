@@ -1,5 +1,5 @@
 export class EmailAlreadyInUse extends Error {
-  constructor (resource: string) {
+  constructor () {
     super('O e-mail já está em uso por outra org');
   }
 }
