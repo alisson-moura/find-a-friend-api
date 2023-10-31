@@ -12,6 +12,24 @@ export interface OrgProps {
   phone: string
 }
 
+export interface OrgContact {
+  id: string
+  name: string
+  email: string
+  phone: string
+  address: {
+    number: number
+    state: string
+    street: string
+    city: string
+    cep: string
+    coordinate: {
+      lat: number
+      long: number
+    }
+  }
+}
+
 export class Org {
   readonly #props: OrgProps;
 
@@ -48,23 +66,9 @@ export class Org {
     this.#props.id = id;
   }
 
-  public get contact (): {
-    name: string
-    email: string
-    phone: string
-    address: {
-      number: number
-      state: string
-      street: string
-      city: string
-      cep: string
-      coordinate: {
-        lat: number
-        long: number
-      }
-    }
-  } {
+  public get contact (): OrgContact {
     return {
+      id: this.#props.id ?? '',
       name: this.#props.name,
       email: this.#props.email,
       phone: this.#props.phone,
