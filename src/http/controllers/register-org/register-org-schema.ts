@@ -17,5 +17,8 @@ export const registerOrgBodySchema = z.object({
 });
 
 export const registerOrgSchema: FastifySchema = {
+  description: 'Create an org',
+  tags: ['Org'],
+  summary: 'Create an org',
   body: registerOrgBodySchema
 };
