@@ -1,12 +1,11 @@
 import { describe, expect, it, vi } from 'vitest';
-import { RegisterPetUseCase } from './register-pet';
 import { ResourceNotFound } from './errors/resource-not-found';
 import { Pet } from '../entities/Pet';
-import { type PetRepository } from '../repositories/pet-repository';
+import { type SearchPetRepository } from '../repositories/pet-repository';
+import { GetPetUseCase } from './get-pet';
 
 describe('Get Pet Use Case', () => {
-  const mockPetRepository: PetRepository = {
-    create: async function (pet: Pet, orgId: string): Promise<void> {},
+  const mockPetRepository: SearchPetRepository = {
     findById: async function (petId: string): Promise<Pet | null> {
       return new Pet({
         animal: {

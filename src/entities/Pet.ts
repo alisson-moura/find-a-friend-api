@@ -32,6 +32,28 @@ export interface PetPropsConstructor {
   photos: string[]
 }
 
+export interface PetInfos {
+  id: string
+  name: string
+  bio: string
+  requirements: string[]
+  energyLevel: number
+  independenceLevel: number
+  animal: {
+    type: string
+    age: {
+      age: number
+      classification: string
+    }
+    size: {
+      size: number
+      classification: string
+    }
+  }
+  status: boolean
+  photos: string[]
+}
+
 export class Pet {
   private readonly props: PetProps;
 
@@ -87,27 +109,7 @@ export class Pet {
     this.props.photos.push(photo);
   }
 
-  get info (): {
-    id: string
-    name: string
-    bio: string
-    requirements: string[]
-    energyLevel: number
-    independenceLevel: number
-    animal: {
-      type: string
-      age: {
-        age: number
-        classification: string
-      }
-      size: {
-        size: number
-        classification: string
-      }
-    }
-    status: boolean
-    photos: string[]
-  } {
+  get info (): PetInfos {
     return {
       id: this.props.id,
       name: this.props.name,
