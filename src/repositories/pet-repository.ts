@@ -2,10 +2,20 @@ import { type Pet } from '../entities/Pet';
 
 export interface PetRepository extends
   CreatePetRepository,
-  SearchPetRepository {}
+  SearchPetRepository,
+  SearchPetByCityRepository { }
 
 export interface SearchPetRepository {
   findById: (petId: string) => Promise<Pet | null>
+}
+
+export interface SearchPetByCityRepository {
+  findByCity: (city: string, query?: {
+    energyLevel?: number
+    independenceLevel?: number
+    type?: 'string'
+    size?: 'string'
+  }) => Promise<Pet[]>
 }
 
 export interface CreatePetRepository {

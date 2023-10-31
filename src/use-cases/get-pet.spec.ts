@@ -3,7 +3,26 @@ import { ResourceNotFound } from './errors/resource-not-found';
 import { Pet } from '../entities/Pet';
 import { type SearchPetRepository } from '../repositories/pet-repository';
 import { GetPetUseCase } from './get-pet';
+import { Org } from '../entities/Org';
+import { type AddressProps, Address } from '../entities/value-objects/Address';
+import { Coordinate } from '../entities/value-objects/Coordinate';
 
+const address: AddressProps = {
+  city: 'Sample City',
+  state: 'Sample State',
+  cep: '12345-678',
+  number: 42,
+  street: 'Sample Street',
+  coordinate: new Coordinate({ lat: 0, long: 0 }) // Substitua pelo seu mock ou instância real de Coordinate
+};
+const org = Org.restore({
+  address: new Address(address),
+  email: 'fake_mail',
+  name: 'fake name',
+  owner: 'fake owner',
+  password: 'fake_password',
+  phone: 'fake_phone'
+});
 describe('Get Pet Use Case', () => {
   const mockPetRepository: SearchPetRepository = {
     findById: async function (petId: string): Promise<Pet | null> {
@@ -13,6 +32,7 @@ describe('Get Pet Use Case', () => {
           type: 'dog',
           size: 25
         },
+        org,
         bio: 'a cute pet',
         dateOfAdoption: null,
         energyLevel: 3,

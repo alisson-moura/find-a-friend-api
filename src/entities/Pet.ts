@@ -3,9 +3,11 @@ import { AnimalFactory } from './Animal';
 import { Photo } from './value-objects/Photo';
 import { Status } from './value-objects/Status';
 import { type Animal } from './Animal/Animal';
+import { type Org, type OrgContact } from './Org';
 
 export interface PetProps {
   id: string
+  org: Org
   name: string
   bio: string
   requirements: string[]
@@ -20,6 +22,7 @@ export interface PetPropsConstructor {
   id?: string
   name: string
   bio: string
+  org: Org
   requirements: string[]
   energyLevel: number
   independenceLevel: number
@@ -34,6 +37,7 @@ export interface PetPropsConstructor {
 
 export interface PetInfos {
   id: string
+  org: OrgContact
   name: string
   bio: string
   requirements: string[]
@@ -60,6 +64,7 @@ export class Pet {
   constructor (props: PetPropsConstructor) {
     const petProps: PetProps = {
       id: props.id ?? randomUUID(),
+      org: props.org,
       name: props.name,
       bio: props.bio,
       requirements: props.requirements,
@@ -111,6 +116,7 @@ export class Pet {
 
   get info (): PetInfos {
     return {
+      org: this.props.org.contact,
       id: this.props.id,
       name: this.props.name,
       bio: this.props.bio,

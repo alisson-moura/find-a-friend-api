@@ -35,6 +35,7 @@ export class RegisterPetUseCase {
     }
     const pet = new Pet({
       ...props,
+      org,
       dateOfAdoption: null
     });
 

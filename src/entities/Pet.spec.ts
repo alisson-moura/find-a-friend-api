@@ -1,12 +1,32 @@
 import { beforeEach, it, describe, expect } from 'vitest';
 import { Pet, type PetPropsConstructor } from './Pet';
 import { Status } from './value-objects/Status';
+import { Org } from './Org';
+import { Address, type AddressProps } from './value-objects/Address';
+import { Coordinate } from './value-objects/Coordinate';
 
 describe('Pet', () => {
   let pet: Pet;
+  const address: AddressProps = {
+    city: 'Sample City',
+    state: 'Sample State',
+    cep: '12345-678',
+    number: 42,
+    street: 'Sample Street',
+    coordinate: new Coordinate({ lat: 0, long: 0 }) // Substitua pelo seu mock ou instância real de Coordinate
+  };
+  const org = Org.restore({
+    address: new Address(address),
+    email: 'fake_mail',
+    name: 'fake name',
+    owner: 'fake owner',
+    password: 'fake_password',
+    phone: 'fake_phone'
+  });
 
   const initialProps: PetPropsConstructor = {
     id: '12345',
+    org,
     name: 'Fluffy',
     bio: 'A cute pet',
     requirements: ['food', 'water'],
@@ -77,6 +97,7 @@ describe('Pet', () => {
     const initialPropsWithoutId: PetPropsConstructor = {
       name: 'Fluffy',
       bio: 'A cute pet',
+      org,
       requirements: ['food', 'water'],
       energyLevel: 5,
       independenceLevel: 3,
