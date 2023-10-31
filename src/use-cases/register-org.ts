@@ -29,7 +29,7 @@ export class RegisterOrgUseCase {
   ) { }
 
   async execute (props: Request): Promise<void> {
-    const isEmailInUse = await this.orgRepository.find(props.email);
+    const isEmailInUse = await this.orgRepository.findByEmail(props.email);
     if (isEmailInUse != null) {
       throw new EmailAlreadyInUse();
     }

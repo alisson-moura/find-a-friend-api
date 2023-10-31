@@ -12,7 +12,7 @@ describe('Auth Org Use Case', () => {
     password: 'fake_password'
   };
   const mockOrgRepository: SearchOrgByEmailRepository = {
-    async find (orgId: string) {
+    async findByEmail (orgId: string) {
       return await Org.create({
         id: 'fake_id',
         address: new Address({
@@ -34,7 +34,7 @@ describe('Auth Org Use Case', () => {
 
   it('Deve retornar um erro caso não seja encontrado uma org com o email informado',
     async () => {
-      vi.spyOn(mockOrgRepository, 'find').mockResolvedValueOnce(null);
+      vi.spyOn(mockOrgRepository, 'findByEmail').mockResolvedValueOnce(null);
       const sut = new AuthOrgUseCase(mockOrgRepository);
       await expect(sut.execute(orgAuthRequest))
         .rejects

@@ -29,7 +29,7 @@ export class RegisterPetUseCase {
   ) { }
 
   async execute (props: Request): Promise<Response> {
-    const org = await this.orgRepository.find(props.orgId);
+    const org = await this.orgRepository.findById(props.orgId);
     if (org == null) {
       throw new ResourceNotFound('org');
     }

@@ -14,7 +14,7 @@ export class AuthOrgUseCase {
   ) {}
 
   async execute (props: Request): Promise<Response> {
-    const org = await this.orgRepository.find(props.email);
+    const org = await this.orgRepository.findByEmail(props.email);
     if (org == null) throw new IncorrectCredentials();
 
     const credentialsAreValid = await org.validateCredentials(props);

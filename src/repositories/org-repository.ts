@@ -6,11 +6,11 @@ export interface OrgRepository extends
   CreateOrgRepository { }
 
 export interface SearchOrgByIdRepository {
-  find: (orgId: string) => Promise<Org | null>
+  findById: (orgId: string) => Promise<Org | null>
 }
 
 export interface SearchOrgByEmailRepository {
-  find: (orgEmail: string) => Promise<Org | null>
+  findByEmail: (orgEmail: string) => Promise<Org | null>
 }
 
 export interface CreateOrgRepository {

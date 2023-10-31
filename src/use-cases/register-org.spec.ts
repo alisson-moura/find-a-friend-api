@@ -8,7 +8,7 @@ import { RegisterOrgUseCase } from './register-org';
 
 describe('Register Org Use Case', () => {
   const mockOrgRepository: SearchOrgByEmailRepository & CreateOrgRepository = {
-    async find (orgEmail: string) {
+    async findByEmail (orgEmail: string) {
       return null;
     },
     async create (org: Org): Promise<Org> {
@@ -59,7 +59,7 @@ describe('Register Org Use Case', () => {
 
   it('não deve ser possível registrar uma org com um e-mail que já está em uso',
     async () => {
-      vi.spyOn(mockOrgRepository, 'find')
+      vi.spyOn(mockOrgRepository, 'findByEmail')
         .mockResolvedValueOnce(Org.restore({
           id: 'fake_id',
           address: new Address({

@@ -10,7 +10,7 @@ import { Coordinate } from '../entities/value-objects/Coordinate';
 
 describe('Register Pet Use Case', () => {
   const mockOrgRepository: SearchOrgByIdRepository = {
-    async find (orgId: string) {
+    async findById (orgId: string) {
       return Org.restore({
         id: 'fake_id',
         address: new Address({
@@ -55,7 +55,7 @@ describe('Register Pet Use Case', () => {
 
   it('não deve ser possível cadastrar um pet para uma org que não existe',
     async () => {
-      vi.spyOn(mockOrgRepository, 'find')
+      vi.spyOn(mockOrgRepository, 'findById')
         .mockResolvedValueOnce(null);
 
       const sut = new RegisterPetUseCase(mockOrgRepository, mockPetRepository);
