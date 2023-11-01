@@ -1,0 +1,92 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Address {
+  org_id String  @id
+  city   String
+  state  String
+  cep    String
+  number Int
+  street String
+  lat    Decimal
+  long   Decimal
+
+  org Org @relation(fields: [org_id], references: [org_id])
+}
+
+model Org {
+  org_id   String @id @default(uuid())
+  name     String
+  email    String @unique
+  password String
+  owner    String
+  phone    String
+
+  pets    Pet[]
+  address Address[]
+
+  @@map("orgs")
+}
+
+model Type {
+  type_id String @id @default(uuid())
+  name    String @unique
+  Pet     Pet[]
+
+  @@map("types")
+}
+
+model Requirement {
+  requirement_id String           @id @default(uuid())
+  requirement    String           @unique
+  PetRequirement PetRequirement[]
+
+  @@map("requirements")
+}
+
+model PetRequirement {
+  requirement_id String
+  pet_id         String
+
+  pet         Pet?         @relation(fields: [pet_id], references: [pet_id])
+  requirement Requirement? @relation(fields: [requirement_id], references: [requirement_id])
+
+  @@id([requirement_id, pet_id])
+}
+
+model Photo {
+  photo_url String @unique()
+  pet_id    String
+  pet       Pet    @relation(fields: [pet_id], references: [pet_id])
+
+  @@map("photos")
+}
+
+model Pet {
+  pet_id             String    @id @default(uuid())
+  org_id             String
+  type_id            String
+  name               String
+  bio                String
+  date_of_birth      DateTime
+  energy_level       Int
+  independence_level Int
+  size               Int
+  date_of_adoption   DateTime?
+
+  requirements PetRequirement[]
+  org          Org              @relation(fields: [org_id], references: [org_id])
+  type         Type             @relation(fields: [type_id], references: [type_id])
+  Photo        Photo[]
+
+  @@map("pets")
+}

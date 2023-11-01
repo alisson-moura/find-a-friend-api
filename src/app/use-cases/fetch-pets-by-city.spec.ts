@@ -1,11 +1,11 @@
 import { describe, it, expect, vi } from 'vitest';
 import { FetchPetsByCityUseCase } from './fetch-pets-by-city';
-import { type SearchPetByCityRepository } from '../repositories/pet-repository';
-import { type PetPropsConstructor, Pet } from '../entities/Pet';
+import { type SearchPetByCityRepository } from '../app/repositories/pet-repository';
+import { type PetPropsConstructor, Pet } from '../app/entities/Pet';
 import { randomUUID } from 'crypto';
-import { Org } from '../entities/Org';
-import { type AddressProps, Address } from '../entities/value-objects/Address';
-import { Coordinate } from '../entities/value-objects/Coordinate';
+import { Org } from '../app/entities/Org';
+import { type AddressProps, Address } from '../app/entities/value-objects/Address';
+import { Coordinate } from '../app/entities/value-objects/Coordinate';
 
 describe('Fetch Pets by city Use Case', () => {
   const address: AddressProps = {

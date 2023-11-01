@@ -1,9 +1,9 @@
 import { type FastifyReply, type FastifyRequest } from 'fastify';
-import { type Org } from '../../../entities/Org';
-import { RegisterOrgUseCase } from '../../../use-cases/register-org';
-import { type OrgRepository } from '../../../repositories/org-repository';
+import { type Org } from '../../../app/entities/Org';
+import { RegisterOrgUseCase } from '../../../app/use-cases/register-org';
+import { type OrgRepository } from '../../../app/repositories/org-repository';
 import { z } from 'zod';
-import { EmailAlreadyInUse } from '../../../use-cases/errors/email-already-use';
+import { EmailAlreadyInUse } from '../../../app/use-cases/errors/email-already-use';
 
 export async function registerOrg (req: FastifyRequest, res: FastifyReply): Promise<FastifyReply> {
   const body = requestBodyRegisterOrgSechema.parse(req.body);

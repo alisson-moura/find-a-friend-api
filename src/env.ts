@@ -4,7 +4,8 @@ import app from './http';
 
 const envSchema = z.object({
   NODE_ENV: z.enum(['dev', 'production', 'test']).default('dev'),
-  HTTP_PORT: z.coerce.number().default(3000)
+  HTTP_PORT: z.coerce.number().default(3000),
+  DATABASE_URL: z.string().url()
 });
 
 const _env = envSchema.safeParse(process.env);

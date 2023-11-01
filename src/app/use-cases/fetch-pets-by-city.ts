@@ -1,5 +1,5 @@
-import { type PetInfos } from '../entities/Pet';
-import { type SearchPetByCityRepository } from '../repositories/pet-repository';
+import { type PetInfos } from '../app/entities/Pet';
+import { type SearchPetByCityRepository } from '../app/repositories/pet-repository';
 
 interface Request {
   city: string

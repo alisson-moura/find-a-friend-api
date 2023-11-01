@@ -1,10 +1,10 @@
 import { describe, it, expect, vi } from 'vitest';
 import { AuthOrgUseCase } from './auth-org';
 import { IncorrectCredentials } from './errors/incorrect-credentials';
-import { type SearchOrgByEmailRepository } from '../repositories/org-repository';
-import { Org } from '../entities/Org';
-import { Address } from '../entities/value-objects/Address';
-import { Coordinate } from '../entities/value-objects/Coordinate';
+import { type SearchOrgByEmailRepository } from '../app/repositories/org-repository';
+import { Org } from '../app/entities/Org';
+import { Address } from '../app/entities/value-objects/Address';
+import { Coordinate } from '../app/entities/value-objects/Coordinate';
 
 describe('Auth Org Use Case', () => {
   const orgAuthRequest = {

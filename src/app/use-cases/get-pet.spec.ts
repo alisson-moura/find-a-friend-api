@@ -1,11 +1,11 @@
 import { describe, expect, it, vi } from 'vitest';
 import { ResourceNotFound } from './errors/resource-not-found';
-import { Pet } from '../entities/Pet';
-import { type SearchPetRepository } from '../repositories/pet-repository';
+import { Pet } from '../app/entities/Pet';
+import { type SearchPetRepository } from '../app/repositories/pet-repository';
 import { GetPetUseCase } from './get-pet';
-import { Org } from '../entities/Org';
-import { type AddressProps, Address } from '../entities/value-objects/Address';
-import { Coordinate } from '../entities/value-objects/Coordinate';
+import { Org } from '../app/entities/Org';
+import { type AddressProps, Address } from '../app/entities/value-objects/Address';
+import { Coordinate } from '../app/entities/value-objects/Coordinate';
 
 const address: AddressProps = {
   city: 'Sample City',

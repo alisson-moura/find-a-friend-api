@@ -1,5 +1,5 @@
-import { type PetInfos } from '../entities/Pet';
-import { type SearchPetRepository } from '../repositories/pet-repository';
+import { type PetInfos } from '../app/entities/Pet';
+import { type SearchPetRepository } from '../app/repositories/pet-repository';
 import { ResourceNotFound } from './errors/resource-not-found';
 
 interface Request {

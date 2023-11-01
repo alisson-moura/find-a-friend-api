@@ -1,6 +1,6 @@
-import { Pet, type PetInfos } from '../entities/Pet';
-import { type SearchOrgByIdRepository } from '../repositories/org-repository';
-import { type CreatePetRepository } from '../repositories/pet-repository';
+import { Pet, type PetInfos } from '../app/entities/Pet';
+import { type SearchOrgByIdRepository } from '../app/repositories/org-repository';
+import { type CreatePetRepository } from '../app/repositories/pet-repository';
 import { ResourceNotFound } from './errors/resource-not-found';
 
 interface Request {

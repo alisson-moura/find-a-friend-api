@@ -1,8 +1,8 @@
 import { describe, expect, it, vi } from 'vitest';
-import { type CreateOrgRepository, type SearchOrgByEmailRepository } from '../repositories/org-repository';
-import { Org } from '../entities/Org';
-import { Address } from '../entities/value-objects/Address';
-import { Coordinate } from '../entities/value-objects/Coordinate';
+import { type CreateOrgRepository, type SearchOrgByEmailRepository } from '../../app/repositories/org-repository';
+import { Org } from '../../app/entities/Org';
+import { Address } from '../../app/entities/value-objects/Address';
+import { Coordinate } from '../../app/entities/value-objects/Coordinate';
 import { EmailAlreadyInUse } from './errors/email-already-use';
 import { RegisterOrgUseCase } from './register-org';
 
