@@ -1,13 +1,11 @@
 import { type FastifyReply, type FastifyRequest } from 'fastify';
-import { type Org } from '../../../app/entities/Org';
-import { RegisterOrgUseCase } from '../../../app/use-cases/register-org';
-import { type OrgRepository } from '../../../app/repositories/org-repository';
 import { z } from 'zod';
 import { EmailAlreadyInUse } from '../../../app/use-cases/errors/email-already-use';
+import { makeRegisterOrgUseCase } from '../../../helpers/factories/make-use-cases';
 
 export async function registerOrg (req: FastifyRequest, res: FastifyReply): Promise<FastifyReply> {
   const body = requestBodyRegisterOrgSechema.parse(req.body);
-  const useCase = new RegisterOrgUseCase(new OrgRepositoryFake());
+  const useCase = makeRegisterOrgUseCase();
   try {
     await useCase.execute(body);
   } catch (error) {
@@ -33,17 +31,3 @@ export const requestBodyRegisterOrgSechema = z.object({
     street: z.string().min(1, 'Por favor ruma rua válida')
   })
 });
-
-class OrgRepositoryFake implements OrgRepository {
-  async findById (orgId: string): Promise<Org | null> {
-    return null;
-  }
-
-  async findByEmail (orgEmail: string): Promise<Org | null> {
-    return null;
-  }
-
-  async create (org: Org): Promise<Org> {
-    return org;
-  }
-}

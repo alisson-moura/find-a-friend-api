@@ -1,12 +1,13 @@
 import { describe, expect, it, vi } from 'vitest';
-import { RegisterPetUseCase } from './register-pet';
+
 import { ResourceNotFound } from './errors/resource-not-found';
-import { type SearchOrgByIdRepository } from '../app/repositories/org-repository';
-import { Org } from '../app/entities/Org';
-import { type Pet } from '../app/entities/Pet';
-import { type CreatePetRepository } from '../app/repositories/pet-repository';
-import { Address } from '../app/entities/value-objects/Address';
-import { Coordinate } from '../app/entities/value-objects/Coordinate';
+import { type SearchOrgByIdRepository } from '../../app/repositories/org-repository';
+import { Org } from '../../app/entities/Org';
+import { type Pet } from '../../app/entities/Pet';
+import { type CreatePetRepository } from '../../app/repositories/pet-repository';
+import { Address } from '../../app/entities/value-objects/Address';
+import { Coordinate } from '../../app/entities/value-objects/Coordinate';
+import { RegisterPetUseCase } from './register-pet';
 
 describe('Register Pet Use Case', () => {
   const mockOrgRepository: SearchOrgByIdRepository = {

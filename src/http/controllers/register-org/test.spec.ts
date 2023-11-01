@@ -25,13 +25,21 @@ describe('Register Org Controller', () => {
   afterAll(async () => {
     await app.close();
   });
+
   it('deve ser possível registrar uma org', async () => {
     const response = await request(app.server)
       .post('/orgs')
       .send(fakeRequest);
     expect(response.statusCode).toEqual(201);
   });
+
   it('deve retornar o status 409 e uma mensagem caso o email já esteja em uso', async () => {
+    // registra a primeira Org
+    await request(app.server)
+      .post('/orgs')
+      .send(fakeRequest);
+
+    // tenta registrar novamente com o e-mail já em uso
     const response = await request(app.server)
       .post('/orgs')
       .send(fakeRequest);

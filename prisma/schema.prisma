@@ -11,28 +11,28 @@ datasource db {
 }
 
 model Address {
-  org_id String  @id
-  city   String
-  state  String
-  cep    String
-  number Int
-  street String
-  lat    Decimal
-  long   Decimal
-
-  org Org @relation(fields: [org_id], references: [org_id])
+  address_id String  @id @unique @default(uuid())
+  city       String
+  state      String
+  cep        String
+  number     Int
+  street     String
+  lat        Decimal
+  long       Decimal
+  Org        Org[]
 }
 
 model Org {
-  org_id   String @id @default(uuid())
-  name     String
-  email    String @unique
-  password String
-  owner    String
-  phone    String
+  org_id     String @id @default(uuid())
+  address_id String
+  name       String
+  email      String @unique
+  password   String
+  owner      String
+  phone      String
 
   pets    Pet[]
-  address Address[]
+  address Address @relation(fields: [address_id], references: [address_id])
 
   @@map("orgs")
 }

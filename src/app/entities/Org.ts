@@ -17,6 +17,7 @@ export interface OrgContact {
   name: string
   email: string
   phone: string
+  owner: string
   address: {
     number: number
     state: string
@@ -62,6 +63,10 @@ export class Org {
     this.#props.password = value;
   }
 
+  get password (): string {
+    return this.#props.password;
+  }
+
   public setId (id: string): void {
     this.#props.id = id;
   }
@@ -72,6 +77,7 @@ export class Org {
       name: this.#props.name,
       email: this.#props.email,
       phone: this.#props.phone,
+      owner: this.#props.owner,
       address: {
         number: this.#props.address.number,
         state: this.#props.address.state,
