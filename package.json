@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "vitest",
+    "test:e2e": "vitest --dir src/http",
     "start:dev": "npx tsx src/server.ts"
   },
   "keywords": [],
