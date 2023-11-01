@@ -46,6 +46,7 @@ export interface PetInfos {
   animal: {
     type: string
     age: {
+      dateOfBirth: Date
       age: number
       classification: string
     }

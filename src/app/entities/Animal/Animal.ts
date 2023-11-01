@@ -21,12 +21,17 @@ export abstract class Animal {
   protected abstract get sizeCriteria (): SizeCriteria;
   protected abstract get ageCriteria (): AgeCriteria;
 
-  get age (): { age: number, classification: string } {
+  get age (): { age: number, classification: string, dateOfBirth: Date } {
     const currentAge = new Age(this._dateOfBirth, this.ageCriteria);
     return {
       age: currentAge.age(),
-      classification: currentAge.classification()
+      classification: currentAge.classification(),
+      dateOfBirth: this.dateOfBirth
     };
+  }
+
+  get dateOfBirth (): Date {
+    return this._dateOfBirth;
   }
 
   get size (): { size: number, classification: string } {

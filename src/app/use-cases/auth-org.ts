@@ -1,4 +1,4 @@
-import { type SearchOrgByEmailRepository } from '../app/repositories/org-repository';
+import { type SearchOrgByEmailRepository } from '../../app/repositories/org-repository';
 import { IncorrectCredentials } from './errors/incorrect-credentials';
 
 interface Request {

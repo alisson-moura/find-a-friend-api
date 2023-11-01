@@ -46,21 +46,13 @@ model Type {
 }
 
 model Requirement {
-  requirement_id String           @id @default(uuid())
-  requirement    String           @unique
-  PetRequirement PetRequirement[]
-
-  @@map("requirements")
-}
-
-model PetRequirement {
-  requirement_id String
+  requirement_id String @id @default(uuid())
+  requirement    String
   pet_id         String
 
-  pet         Pet?         @relation(fields: [pet_id], references: [pet_id])
-  requirement Requirement? @relation(fields: [requirement_id], references: [requirement_id])
+  pet Pet @relation(fields: [pet_id], references: [pet_id])
 
-  @@id([requirement_id, pet_id])
+  @@map("requirements")
 }
 
 model Photo {
@@ -83,10 +75,10 @@ model Pet {
   size               Int
   date_of_adoption   DateTime?
 
-  requirements PetRequirement[]
-  org          Org              @relation(fields: [org_id], references: [org_id])
-  type         Type             @relation(fields: [type_id], references: [type_id])
-  Photo        Photo[]
+  requirements Requirement[]
+  org          Org           @relation(fields: [org_id], references: [org_id])
+  type         Type          @relation(fields: [type_id], references: [type_id])
+  photos       Photo[]
 
   @@map("pets")
 }

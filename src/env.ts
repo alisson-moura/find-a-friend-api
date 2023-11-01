@@ -5,6 +5,7 @@ import app from './http';
 const envSchema = z.object({
   NODE_ENV: z.enum(['dev', 'production', 'test']).default('dev'),
   HTTP_PORT: z.coerce.number().default(3000),
+  JWT_SECRET: z.string().min(3),
   DATABASE_URL: z.string().url()
 });
 
