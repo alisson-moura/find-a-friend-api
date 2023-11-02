@@ -1,4 +1,5 @@
 import { AuthOrgUseCase } from '../../app/use-cases/auth-org';
+import { GetPetUseCase } from '../../app/use-cases/get-pet';
 import { RegisterOrgUseCase } from '../../app/use-cases/register-org';
 import { RegisterPetUseCase } from '../../app/use-cases/register-pet';
 import { PrismaOrgRepository } from '../../database/repositories/prisma-org-repository';
@@ -17,4 +18,8 @@ export function makeAuthOrgUseCase (): AuthOrgUseCase {
 
 export function makeRegisterPetUseCase (): RegisterPetUseCase {
   return new RegisterPetUseCase(prismaOrgRepository, prismaPetRepository);
+}
+
+export function makeGetPetUseCase(): GetPetUseCase {
+  return new GetPetUseCase(prismaPetRepository)
 }

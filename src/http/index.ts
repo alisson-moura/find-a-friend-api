@@ -4,7 +4,7 @@ import { privateRoutes, publicRoutes } from './controllers/routes';
 import { env } from '../env';
 
 const app = Fastify({
-  logger: true
+  logger: env.NODE_ENV === 'dev'
 });
 
 void app.register(jwt, { secret: env.JWT_SECRET });

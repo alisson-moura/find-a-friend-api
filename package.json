@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "pretest": "chmod +x ./scripts/*",
+    "pretest:e2e": "chmod +x ./scripts/*",
     "test:unit": "vitest run --dir src/app",
     "test:e2e": "./scripts/run-integration.sh",
     "start:dev": "npx tsx src/server.ts"

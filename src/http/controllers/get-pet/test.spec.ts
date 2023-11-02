@@ -4,9 +4,10 @@ import { type z } from 'zod';
 import { expect, describe, it, beforeAll, afterAll } from 'vitest';
 import app from '../..';
 import { mockOrgAndAuthToken } from '../../../helpers/tests/mock-org-and-auth-token';
-import { type requestBodyRegisterPetSechema } from '.';
+import { requestBodyRegisterPetSechema } from '../register-pet';
 
-const fakeRequest: z.infer<typeof requestBodyRegisterPetSechema> = {
+
+const fakeRequestRegisterPet: z.infer<typeof requestBodyRegisterPetSechema> = {
   name: 'John Doe',
   bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
   energyLevel: 7,
@@ -20,7 +21,7 @@ const fakeRequest: z.infer<typeof requestBodyRegisterPetSechema> = {
   }
 };
 
-describe('Register Pet Controller', () => {
+describe('Get Pet Controller', () => {
   beforeAll(async () => {
     await app.ready();
   });
@@ -28,31 +29,31 @@ describe('Register Pet Controller', () => {
     await app.close();
   });
 
-  it('deve ser possível registrar um pet', async () => {
-    const { token } = await mockOrgAndAuthToken();
+  it('deve ser possível exibir as informações de um pet pelo id', async () => {
+    const { token, org } = await mockOrgAndAuthToken();
 
-    const response = await request(app.server)
+    // create an fake pet
+    const { body: pet } = await request(app.server)
       .post('/pets')
-      .send(fakeRequest)
+      .send(fakeRequestRegisterPet)
       .set('Authorization', `Bearer ${token}`);
 
-    expect(response.statusCode).toEqual(201);
-    expect(response.body.id).toEqual(expect.any(String));
+    const response = await request(app.server)
+      .get(`/pets/${pet.id}`)
+
+    expect(response.statusCode).toEqual(200);
+    expect(response.body.pet).toEqual(expect.objectContaining({
+        id: pet.id,
+    }));
   });
 
-  it('deve retornar um erro caso a org informada esteja incorreta', async () => {
-    // create an org
-    await mockOrgAndAuthToken();
-
-    // generate an fake token
-    const fakeToken = app.jwt.sign({ }, { sub: randomUUID() });
+  it('deve retornar um erro caso o id  do pet esteja incorreto', async () => {
+    const wrongPetId = randomUUID()
 
     const response = await request(app.server)
-      .post('/pets')
-      .send(fakeRequest)
-      .set('Authorization', `Bearer ${fakeToken}`);
+      .get(`/pets/${wrongPetId}`)
 
     expect(response.statusCode).toEqual(400);
-    expect(response.body.message).toEqual('Recurso não encontrado: [org]');
+    expect(response.body.message).toEqual('Recurso não encontrado: [pet]');
   });
 });

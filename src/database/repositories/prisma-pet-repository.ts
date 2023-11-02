@@ -1,10 +1,41 @@
 import { type Type } from '@prisma/client';
 import { prisma } from '..';
-import { type Pet } from '../../app/entities/Pet';
-import { type CreatePetRepository } from '../../app/repositories/pet-repository';
+import { Pet } from '../../app/entities/Pet';
+import { SearchPetRepository, type CreatePetRepository } from '../../app/repositories/pet-repository';
+import { Photo } from '../../app/entities/value-objects/Photo';
+import { Org } from '../../app/entities/Org';
+import { PrismaOrgRepository } from './prisma-org-repository';
 
-export class PrismaPetRepository implements CreatePetRepository {
-  async create (pet: Pet, orgId: string): Promise<void> {
+export class PrismaPetRepository implements CreatePetRepository, SearchPetRepository {
+  async findById(petId: string): Promise<Pet | null> {
+    const orgRepository = new PrismaOrgRepository();
+    const prismaPet = await prisma.pet.findUnique({ where: { pet_id: petId }, include: { photos: true, requirements: true, type: true } })
+
+    if (prismaPet != null) {
+      const org = await orgRepository.findById(prismaPet.org_id)
+      if (org === null)
+        throw new Error('Invalid Org Id')
+
+      return new Pet({
+        id: prismaPet.pet_id,
+        bio: prismaPet.bio,
+        energyLevel: prismaPet.energy_level,
+        name: prismaPet.name,
+        independenceLevel: prismaPet.independence_level,
+        photos: prismaPet.photos.map(ph => ph.photo_url),
+        requirements: prismaPet.requirements.map(rq => rq.requirement),
+        dateOfAdoption: prismaPet.date_of_adoption,
+        animal: {
+          dateOfBirth: prismaPet.date_of_birth,
+          size: prismaPet.size,
+          type: prismaPet.type.name
+        },
+        org
+      })
+    }
+    return null
+  }
+  async create(pet: Pet, orgId: string): Promise<void> {
     const { bio, energyLevel, name, id, independenceLevel, animal, requirements, photos } = pet.info;
 
     let type: Type | null;
