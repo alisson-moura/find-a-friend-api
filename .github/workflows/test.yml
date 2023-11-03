@@ -1,4 +1,7 @@
-name: Run Unit Tests
+name: Run Tests
+env:
+  DATABASE_URL: postgresql://prisma:prisma@localhost:5432/tests?schema=public
+  JWT_SECRET: secretValue
 
 on: ['push']
 
@@ -13,3 +16,17 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - run: npm run test:unit
+
+  e2e-tests:
+    runs-on: ubuntu-latest
+    steps:                        
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+      - uses: ./.github/actions/docker-compose
+        with:
+          node-version: 18
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run test:e2e
+
+
