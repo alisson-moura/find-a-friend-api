@@ -4,10 +4,26 @@ import { privateRoutes, publicRoutes } from './controllers/routes';
 import { env } from '../env';
 import { AppError } from '../app/entities/App-Error';
 import { ZodError } from 'zod';
+import { swaggerConfig, swaggerUI } from '../helpers/documentation/swaggerDoc';
+import { validatorCompiler, serializerCompiler } from 'fastify-type-provider-zod';
 
 const app = Fastify({
   logger: env.NODE_ENV === 'dev'
 });
+
+app.setValidatorCompiler(validatorCompiler);
+app.setSerializerCompiler(serializerCompiler);
+
+if (env.NODE_ENV !== 'test') {
+  void app.register(import('@fastify/swagger'),
+    swaggerConfig);
+
+  void app.register(import('@fastify/swagger-ui'),
+    swaggerUI);
+  void app.ready().then(() => {
+    app.swagger();
+  });
+}
 
 void app.register(jwt, { secret: env.JWT_SECRET });
 void app.register(publicRoutes);

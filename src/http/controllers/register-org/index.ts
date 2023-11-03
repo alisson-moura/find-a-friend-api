@@ -4,7 +4,7 @@ import { EmailAlreadyInUse } from '../../../app/use-cases/errors/email-already-u
 import { makeRegisterOrgUseCase } from '../../../helpers/factories/make-use-cases';
 
 export async function registerOrg (req: FastifyRequest, res: FastifyReply): Promise<FastifyReply> {
-  const body = requestBodyRegisterOrgSechema.parse(req.body);
+  const body = requestBodyRegisterOrgSchema.parse(req.body);
   const useCase = makeRegisterOrgUseCase();
   try {
     await useCase.execute(body);
@@ -17,7 +17,7 @@ export async function registerOrg (req: FastifyRequest, res: FastifyReply): Prom
   return await res.status(201).send();
 }
 
-export const requestBodyRegisterOrgSechema = z.object({
+export const requestBodyRegisterOrgSchema = z.object({
   name: z.string().min(3),
   owner: z.string().min(3),
   email: z.string().email(),

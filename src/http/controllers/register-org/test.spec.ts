@@ -1,10 +1,10 @@
 import request from 'supertest';
 import { expect, describe, it, beforeAll, afterAll } from 'vitest';
 import app from '../..';
-import { type requestBodyRegisterOrgSechema } from '.';
+import { type requestBodyRegisterOrgSchema } from '.';
 import { type z } from 'zod';
 
-const fakeRequest: z.infer<typeof requestBodyRegisterOrgSechema> = {
+const fakeRequest: z.infer<typeof requestBodyRegisterOrgSchema> = {
   name: 'fakeNome do Usuário',
   owner: 'fakeNome do Proprietário',
   email: 'fake_email@example.com',
