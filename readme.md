@@ -1,70 +1,102 @@
-# Modelagem de Dados:
 
-## Identifique os Requisitos:
-- [x] Deve ser possível cadastrar um pet
-  - [x] Um pet deve estar ligado a uma ORG
-- [x] Deve ser possível listar todos os pets disponíveis para adoção em uma cidade
-  - [x] Para listar os pets, obrigatoriamente precisamos informar a cidade
-  - [x] Todos os filtros, além da cidade, são opcionais
-  - [x] Deve ser possível filtrar pets por suas características
-- [x] Deve ser possível visualizar detalhes de um pet para adoção
-- [x] Deve ser possível se cadastrar como uma ORG
-  - [x] Uma ORG precisa ter um endereço e um número de WhatsApp
-- [x] Deve ser possível realizar login como uma ORG
-  - [x] Para uma ORG acessar a aplicação como admin, ela precisa estar logada
+#  API FindAFriend
 
-## Identifique as Entidades:
-- [ ] Pet
-- [ ] Org
+A FindAFriend API é uma aplicação desenvolvida como parte de um desafio de um bootcamp de desenvolvimento com Node.js. Essa API foi criada para facilitar a adoção de animais, conectando pessoas interessadas em adotar animais de estimação a organizações que cuidam de animais em busca de novos lares.
 
-## Defina os Atributos: 
-- [ ] Pet                  
-  * id
-  * especie
-  * org
-  * name
-  * bio
-  * dateOfBirth
-  * dateOfAdoption
-  * energyLevel
-  * size
-  * independenceLevel
-  * requirements
-  * photos
 
-- [ ] Org
-  * id
-  * name
-  * nameOfOwner
-  * email
-  * password
-  * cep
-  * address
-  * coordinate
-  * phone
+## Funcionalidades
 
-## Estabeleça Relacionamentos:
-  Uma organização possui vários pets e um pet possui relação com apenas uma org.
+- Cadastro de Pets: Permite que as organizações adicionem informações sobre animais disponíveis para adoção, incluindo detalhes como nome, idade, raça, características e fotos.
 
-# DDD (Domain-Driven Design)
+- Listagem de Pets por Cidade: Os usuários podem listar todos os pets disponíveis para adoção em uma cidade específica.
 
-## Entidades e Agregados
-- [x] Pet entidade que representa um animal de estimação
-- [ ] Org entindade que representa uma org
+- Filtragem de Pets por Características: Os usuários têm a opção de filtrar pets com base em suas características, tornando mais fácil encontrar o animal de estimação perfeito.
 
-## Value Objects:
-- [ ] Coordenadas
-- [ ] Size
-- [ ] Energy
-- [ ] Photo
+- Visualização de Detalhes de um Pet: Os detalhes de um pet podem ser visualizados para obter informações completas sobre o animal em busca de um lar.
 
-## Repositórios: 
-- Repositório de pets
-- Repositório de orgs
+- Cadastro de ORGs: As organizações podem se cadastrar, fornecendo informações como nome, endereço e número de WhatsApp.
 
-## Serviços de Domínio
-- [ ] cadastrar um pet
-- [ ] listar pets por cidade
-- [ ] visualizar detalhes de um pet
-- [ ] cadastrar como uma ORG
-- [ ] login como uma ORG
+- Login como ORG: As organizações podem realizar login como administradores, permitindo que acessem recursos de administração.
+
+## Variáveis de Ambiente
+
+Para rodar esse projeto, você vai precisar adicionar as seguintes variáveis de ambiente no seu .env
+
+
+`NODE_ENV = "dev"`
+
+`HTTP_PORT = 3000`
+
+`DATABASE_URL = "postgresql://prisma:prisma@localhost:5432/tests?schema=public"`
+
+`JWT_SECRET = "secret_hash"`
+## Rodando localmente
+
+Clone o projeto
+
+```bash
+  git clone https://github.com/alisson-moura/find-a-friend-api.git
+```
+
+Entre no diretório do projeto
+
+```bash
+  cd my-project
+```
+
+Instale as dependências
+
+```bash
+  npm install
+```
+
+Inicie o container com banco de dados
+
+```bash
+  docker compose up -d
+```
+
+Execute as migrations do Prisma
+
+```bash
+  npx prisma migrate dev
+```
+
+Inicie o servidor
+
+```bash
+  npm run start:dev
+```
+
+
+**Documentação online:**  [Swagger](https://localhost:3000/documentation)
+
+
+
+## Rodando os testes
+
+Para rodar os testes de unidade, rode o seguinte comando
+
+```bash
+  npm run test:unit
+```
+
+Para rodar os testes de integração, rode o seguinte comando
+
+```bash
+  npm run test:e2e
+```
+
+
+## Stack utilizada
+
+- **Runtime**: Node.js
+- **Linguagem**: Typescript
+- **Libs**: Fastify, Prisma, Zod
+- **Banco de dados:** PostgreSQL
+
+
+## Autores
+
+- [@alisson](https://www.github.com/alisson-moura)
+
