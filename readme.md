@@ -49,7 +49,7 @@
 # DDD (Domain-Driven Design)
 
 ## Entidades e Agregados
-- [ ] Pet entidade que representa um animal de estimação
+- [x] Pet entidade que representa um animal de estimação
 - [ ] Org entindade que representa uma org
 
 ## Value Objects:
