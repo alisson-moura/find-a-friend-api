@@ -1,6 +1,5 @@
 import 'dotenv/config';
 import { z } from 'zod';
-import app from './http';
 
 const envSchema = z.object({
   NODE_ENV: z.enum(['dev', 'production', 'test']).default('dev'),
@@ -12,9 +11,9 @@ const envSchema = z.object({
 const _env = envSchema.safeParse(process.env);
 
 if (!_env.success) {
-  app.log.error('⚠️ Environment variables missing');
-  app.log.error(_env.error.format());
-  process.exit(1);
+  console.error('⚠️ Environment variables missing');
+  console.log(_env.error.format());
+  throw new Error('Invalid environment variables');
 }
 
 export const env = _env.data;
