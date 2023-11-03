@@ -20,6 +20,6 @@ export function makeRegisterPetUseCase (): RegisterPetUseCase {
   return new RegisterPetUseCase(prismaOrgRepository, prismaPetRepository);
 }
 
-export function makeGetPetUseCase(): GetPetUseCase {
-  return new GetPetUseCase(prismaPetRepository)
+export function makeGetPetUseCase (): GetPetUseCase {
+  return new GetPetUseCase(prismaPetRepository);
 }

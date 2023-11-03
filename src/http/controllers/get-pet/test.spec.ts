@@ -4,8 +4,7 @@ import { type z } from 'zod';
 import { expect, describe, it, beforeAll, afterAll } from 'vitest';
 import app from '../..';
 import { mockOrgAndAuthToken } from '../../../helpers/tests/mock-org-and-auth-token';
-import { requestBodyRegisterPetSechema } from '../register-pet';
-
+import { type requestBodyRegisterPetSechema } from '../register-pet';
 
 const fakeRequestRegisterPet: z.infer<typeof requestBodyRegisterPetSechema> = {
   name: 'John Doe',
@@ -30,7 +29,7 @@ describe('Get Pet Controller', () => {
   });
 
   it('deve ser possível exibir as informações de um pet pelo id', async () => {
-    const { token, org } = await mockOrgAndAuthToken();
+    const { token } = await mockOrgAndAuthToken();
 
     // create an fake pet
     const { body: pet } = await request(app.server)
@@ -39,19 +38,19 @@ describe('Get Pet Controller', () => {
       .set('Authorization', `Bearer ${token}`);
 
     const response = await request(app.server)
-      .get(`/pets/${pet.id}`)
+      .get(`/pets/${pet.id}`);
 
     expect(response.statusCode).toEqual(200);
     expect(response.body.pet).toEqual(expect.objectContaining({
-        id: pet.id,
+      id: pet.id
     }));
   });
 
   it('deve retornar um erro caso o id  do pet esteja incorreto', async () => {
-    const wrongPetId = randomUUID()
+    const wrongPetId = randomUUID();
 
     const response = await request(app.server)
-      .get(`/pets/${wrongPetId}`)
+      .get(`/pets/${wrongPetId}`);
 
     expect(response.statusCode).toEqual(400);
     expect(response.body.message).toEqual('Recurso não encontrado: [pet]');

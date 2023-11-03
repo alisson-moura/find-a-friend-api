@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "lint": "eslint src --ext .ts --fix",
     "pretest:e2e": "chmod +x ./scripts/*",
     "test:unit": "vitest run --dir src/app",
     "test:e2e": "./scripts/run-integration.sh",
