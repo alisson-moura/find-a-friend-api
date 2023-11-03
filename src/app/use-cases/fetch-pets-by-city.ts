@@ -6,8 +6,7 @@ interface Request {
   query?: {
     energyLevel?: number
     independenceLevel?: number
-    type?: 'string'
-    size?: 'string'
+    type?: string
   }
 }
 

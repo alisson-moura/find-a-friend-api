@@ -13,8 +13,7 @@ export interface SearchPetByCityRepository {
   findByCity: (city: string, query?: {
     energyLevel?: number
     independenceLevel?: number
-    type?: 'string'
-    size?: 'string'
+    type?: string
   }) => Promise<Pet[]>
 }
 

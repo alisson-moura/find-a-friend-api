@@ -14,7 +14,7 @@ export async function mockOrgAndAuthToken (): Promise<{ org: Org, token: string 
       address: {
         create: {
           cep: 'fake12345-678',
-          city: 'fakeCidade',
+          city: 'fakeCity Name',
           number: 123,
           state: 'FS',
           street: 'fakeNome da Rua',

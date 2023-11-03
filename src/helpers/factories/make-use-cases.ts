@@ -1,4 +1,5 @@
 import { AuthOrgUseCase } from '../../app/use-cases/auth-org';
+import { FetchPetsByCityUseCase } from '../../app/use-cases/fetch-pets-by-city';
 import { GetPetUseCase } from '../../app/use-cases/get-pet';
 import { RegisterOrgUseCase } from '../../app/use-cases/register-org';
 import { RegisterPetUseCase } from '../../app/use-cases/register-pet';
@@ -22,4 +23,8 @@ export function makeRegisterPetUseCase (): RegisterPetUseCase {
 
 export function makeGetPetUseCase (): GetPetUseCase {
   return new GetPetUseCase(prismaPetRepository);
+}
+
+export function makeFetchPetsByCity (): FetchPetsByCityUseCase {
+  return new FetchPetsByCityUseCase(prismaPetRepository);
 }

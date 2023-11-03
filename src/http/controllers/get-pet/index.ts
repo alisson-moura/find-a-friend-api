@@ -13,8 +13,6 @@ export async function getPetController (req: FastifyRequest, res: FastifyReply):
     if (error instanceof ResourceNotFound) {
       return await res.status(400).send({ message: error.message });
     }
-
-    console.error(error);
     throw error;
   }
 }
