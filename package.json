@@ -8,7 +8,9 @@
     "pretest:e2e": "chmod +x ./scripts/*",
     "test:unit": "vitest run --dir src/app",
     "test:e2e": "./scripts/run-integration.sh",
-    "start:dev": "tsx watch src/server.ts"
+    "start:dev": "tsx watch src/server.ts",
+    "start": "node dist/server.js",
+    "build": "tsup src --out-dir dist"
   },
   "keywords": [],
   "author": "",
@@ -26,6 +28,7 @@
     "eslint-plugin-n": "16.2.0",
     "eslint-plugin-promise": "6.1.1",
     "prisma": "5.5.2",
+    "tsup": "7.2.0",
     "tsx": "3.14.0",
     "typescript": "5.2.2",
     "vitest": "0.34.6"
